@@ -12,11 +12,7 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: '**',
-    component: NotFoundPageComponent
-  },
-  {
-    path: 'article/id',
+    path: 'article/:id',
     component: ArticlePageComponent,
   },
   {
@@ -25,6 +21,10 @@ export const routes: Routes = [
   },
   {
     path: 'signup',
-    component: SignupPageComponent
-  }
+    component: SignupPageComponent,
+  },
+  {
+    path: '**',
+    component: NotFoundPageComponent,
+  },
 ];

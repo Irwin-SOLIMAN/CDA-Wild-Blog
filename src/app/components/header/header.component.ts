@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
+import { inject } from '@angular/core';
 
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [RouterLink],
   templateUrl: './header.component.html',
-  styleUrl: './header.component.scss'
+  styleUrl: './header.component.scss',
 })
 export class HeaderComponent {
-
-  private route: Router = injecting(ActivatedRoute);
+  private router: Router = inject(Router);
 
   navigateToSignUpPage(): void {
-    this.route.navigateTo(/signup)
+    this.router.navigate(['/signup']);
   }
 }
