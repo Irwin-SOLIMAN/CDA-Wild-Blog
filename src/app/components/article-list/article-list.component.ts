@@ -15,14 +15,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ArticleListComponent {
   htpp = inject(HttpClient);
+  apiService = inject(ApiService);
   articles$!: Observable<Article[]>;
 
-  getArticles() {
-    return this.htpp.get<Article[]>('http://localhost:3000/articles');
-  }
-
   ngOnInit() {
-    this.articles$ = this.getArticles();
+    this.articles$ = this.apiService.getArticles();
     console.log(this.articles$);
   }
 

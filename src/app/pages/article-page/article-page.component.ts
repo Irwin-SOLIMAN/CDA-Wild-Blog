@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Article } from '../../models/article.model';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { ApiService } from '../../service/api.service';
 
 @Component({
   selector: 'app-article-page',
@@ -18,26 +19,13 @@ export class ArticlePageComponent implements OnInit {
   article$!: Observable<Article>;
 
   http = inject(HttpClient);
-
-  getArticleById(id: number): Observable<Article> {
-    return this.http.get<Article>(`http://localhost:3000/articles/${id}`);
-  }
-
-  variantGetArticleById(id: number): Observable<Article> {
-    return this.http.get<Article[]>(`http://localhost:3000/articles`).pipe(
-      map((articles: Article[]) => articles[id]),
-      catchError((err) => {
-        console.log(err);
-        return of({} as Article); // création d'un observable null [car le pipe n'accepete que de chain les observables]
-      })
-    );
-  }
+  apiService = inject(ApiService);
 
   ngOnInit() {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.articleId = Number(params.get('id'));
     });
-    this.article$ = this.getArticleById(this.articleId);
-    // this.article$ = this.variantGetArticleById(this.articleId);
+    this.article$ = this.apiService.getArticleById(this.articleId);
+    this.article$ = this.apiService.variantGetArticleById(this.articleId);
   }
 }
